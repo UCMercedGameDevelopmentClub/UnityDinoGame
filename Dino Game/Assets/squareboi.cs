@@ -4,44 +4,56 @@ using UnityEngine;
 
 public class squareboi : MonoBehaviour
 {
-    Rigidbody2D rb;
+    Rigidbody2D rb2d;
     // Start is called before the first frame update
-    Vector2 gravity = new Vector2(0.0f, -9.8f);
-    bool falling = false;
+    bool falling = true;
     void Start()
     {
-        rb = gameObject.GetComponent(typeof(Rigidbody2D)) as Rigidbody2D;
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (falling)
-            rb.MovePosition(rb.position + gravity * Time.deltaTime);
+        {
 
-        if (Input.GetKeyDown("space"))
+        }
+
+        else if (Input.GetKeyDown("space"))
         {
             Jump();
+            falling = true;
         }
-        falling = true;
+
     }
 
     void Jump()
     {
-        rb.MovePosition(rb.position + new Vector2(0.0f, 5.0f));
+        rb2d.AddForce(new Vector2(0.0f, 500.0f));
     }
 
-    void OnCollisionStay(Collision collisionInfo)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        foreach (ContactPoint contact in collisionInfo.contacts)
+      
+        if(col.gameObject.name == "floor")
         {
-            if(contact.otherCollider.gameObject.name == "floor")
-            {
-                falling = false;
-            }
+            falling = false;
+        }
+        else if(col.gameObject.name == "bad")
+        {
+            //gameover
+        }
+        
+    }
+
+    void onTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.name == "bad")
+        {
+            Debug.Log("ow");
         }
     }
-
 
 
 }
