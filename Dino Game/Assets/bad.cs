@@ -17,4 +17,9 @@ public class bad : MonoBehaviour
     {
         rb2d.MovePosition(rb2d.position + velocity * Time.deltaTime);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("owie");
+    }
 }
