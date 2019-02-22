@@ -20,14 +20,14 @@ public class squareboi : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyUp("space"))
+        if (Input.GetMouseButtonUp(0) || Input.GetKeyUp("space"))
         {
             longJump = false;
         }
 
         if (falling)
         {
-            if (Input.GetKey("space") && longJump){
+            if ((Input.GetMouseButton(0) || Input.GetKey("space")) && longJump){
                 currHold += Time.deltaTime;
                 if(currHold >= holdDuration)
                 {
@@ -37,7 +37,7 @@ public class squareboi : MonoBehaviour
             }
         }
 
-        else if (Input.GetKeyDown("space"))
+        else if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space"))
         {
             Jump();
             falling = true;
