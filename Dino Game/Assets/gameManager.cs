@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class gameManager : MonoBehaviour
 {
-
-    float score = 0f;
+    [SerializeField]
+    Text scoreDisplay;
+    
+    public float score = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +19,11 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score += Time.deltaTime 
+        score += Time.deltaTime * 100;
+        scoreDisplay.text = "Score: " + Mathf.RoundToInt(score).ToString();
+    }
+
+    public void gameOver(){
+        score = 0.0f;
     }
 }
