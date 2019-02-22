@@ -6,7 +6,7 @@ public class bad : MonoBehaviour
 {
     Rigidbody2D rb2d;
     [SerializeField]
-    float speed = 5.0f;
+    float speed = 7.0f;
 
     float speedMultiplier = 1.0f;
 

@@ -23,11 +23,11 @@ public class spawner : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        speedMultiplier = 1.0f + gm.score/2000;
+        speedMultiplier = 1.0f + gm.score/7000;
         if(cooldown <= 0)
         {
             GameObject newO = Instantiate(obstacle, transform);
-            cooldown =  Random.Range(2.0f / speedMultiplier, 7.0f / speedMultiplier);
+            cooldown =  Random.Range(0.5f / speedMultiplier, 3.0f / speedMultiplier);
         }
     }
 }
