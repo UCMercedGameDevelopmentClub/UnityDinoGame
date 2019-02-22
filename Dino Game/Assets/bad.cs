@@ -6,7 +6,7 @@ public class bad : MonoBehaviour
 {
     Rigidbody2D rb2d;
     [SerializeField]
-    float speed = 3.0f;
+    float speed = 5.0f;
 
     float speedMultiplier = 1.0f;
 
@@ -18,7 +18,7 @@ public class bad : MonoBehaviour
     {
         gm = GameObject.Find("gameManager").GetComponent<gameManager>();
         rb2d = GetComponent<Rigidbody2D>(); 
-        speedMultiplier += gm.score / 1000;
+        speedMultiplier = 1.0f + gm.score / 3000;
         velocity =  new Vector2(-speed * speedMultiplier,0f);
   
     }

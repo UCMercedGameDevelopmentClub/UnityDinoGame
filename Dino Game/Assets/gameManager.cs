@@ -9,7 +9,8 @@ public class gameManager : MonoBehaviour
     [SerializeField]
     Text scoreDisplay;
     
-    public float score = 0f;
+    public float high = 0.0f;
+    public float score = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +21,13 @@ public class gameManager : MonoBehaviour
     void Update()
     {
         score += Time.deltaTime * 100;
-        scoreDisplay.text = "Score: " + Mathf.RoundToInt(score).ToString();
+        scoreDisplay.text = "High: " + Mathf.RoundToInt(high).ToString() + " Score: " + Mathf.RoundToInt(score).ToString();
     }
 
     public void gameOver(){
+        if(high < score){
+            high = score;
+        }
         score = 0.0f;
     }
 }

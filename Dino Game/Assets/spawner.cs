@@ -23,7 +23,7 @@ public class spawner : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        speedMultiplier = 1.0f + gm.score/1000;
+        speedMultiplier = 1.0f + gm.score/2000;
         if(cooldown <= 0)
         {
             GameObject newO = Instantiate(obstacle, transform);
