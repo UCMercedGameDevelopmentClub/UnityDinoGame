@@ -31,7 +31,7 @@ public class squareboi : MonoBehaviour
                 currHold += Time.deltaTime;
                 if(currHold >= holdDuration)
                 {
-                    rb2d.AddForce(new Vector2(0.0f, 150.0f));
+                    rb2d.AddForce(new Vector2(0.0f, 3.0f), ForceMode2D.Impulse);
                     longJump = false;
                 }
             }
@@ -49,7 +49,7 @@ public class squareboi : MonoBehaviour
 
     void Jump()
     {
-        rb2d.AddForce(new Vector2(0.0f, 350.0f));
+        rb2d.AddForce(new Vector2(0.0f, 7.0f), ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D col)
