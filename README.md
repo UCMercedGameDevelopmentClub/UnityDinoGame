@@ -57,7 +57,7 @@ To UCMGDC's Intro to Unity workshop. Today we're going to demostrate the basics 
 
 #### Referencing the RigidBody2D
 1. By default none of the components under the game object are accessible in the script. We can aquire a reference to them by using the `GetComponent<ObjectType>()` function. We want to reference the RigidBody2D in the player object so we can apply force for jumps.
-```
+```Csharp
 ...
 public class squareboi : MonoBehaviour
 {
@@ -73,7 +73,7 @@ public class squareboi : MonoBehaviour
 #### Adding Jumps
 2. We'll add a additional function to the player class for jumping. We'll use `AddForce()` on the rigidbody to apply upward foce  on the player.
 
-```
+```Csharp
    void Jump()
    {
       rb2d.AddForce(new Vector2(0.0f, 5.5f), ForceMode2D.Impulse);
@@ -81,7 +81,7 @@ public class squareboi : MonoBehaviour
 ```
 
 3. Now in the `Update()` fuction we'll check for player input.
-```
+```Csharp
    void Update()
    {
       if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space"))
@@ -101,19 +101,19 @@ public class squareboi : MonoBehaviour
 Currently the player can jump whenever, where ever. We want to make sure the player can only jump on the ground.
 
 1. Add the following members to the player class.
-```
+```Csharp
 bool grounded = false;
 ```
 
 2. In the Update() check the player is grounded as well before jumping
-```
+```Csharp
 ...
 if (Input.GetKeyDown("space") && grounded)
 ...
 ```
 
 3. Whenever the player collides with the floor we set grounded to true
-```
+```Csharp
     void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.name == "floor")
@@ -124,7 +124,7 @@ if (Input.GetKeyDown("space") && grounded)
 ```
 
 4. Whenever the player jumps, set grounded to false. Add the following code to the Jump() function.
-```
+```Csharp
       grounded = false;
 ```
 
@@ -135,7 +135,7 @@ if (Input.GetKeyDown("space") && grounded)
 3. Set the Body Type to kinematic, collision detection to.
 
 
-'''
+```Csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -169,10 +169,17 @@ public class spawner : MonoBehaviour
         }
     }
 }
-'''
+```
+
+### Creating a game manager (gameManager.cs)
+1. In heiarchy, add a Canvas by right-clicking to `UI` > `Canvas`.
+2. Select the new Canvas in the heiarchy, create a Text called *score* by right-clicking to `UI` > `Text`.
+3. Within the inspector change the text under **Text(Script)** to `High: 0000 Score: 0000` to display both the high score and current score.
+4. Create a empty game object within heiarchy called `gameManager`by right clicking to `Create Empty`.
+5. 
 
 ### Adding a game manager 
-```
+```Csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -208,5 +215,47 @@ public class gameManager : MonoBehaviour
 }
 ```
 
+```Csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class bad : MonoBehaviour
+{
+    Rigidbody2D rb2d;
+    [SerializeField]
+    float speed = 7.0f;
+
+    float speedMultiplier = 1.0f;
+
+    gameManager gm;
+
+    Vector2 velocity;
+    // Start is called before the first frame update
+    void Start()
+    {
+        gm = GameObject.Find("gameManager").GetComponent<gameManager>();
+        rb2d = GetComponent<Rigidbody2D>(); 
+        speedMultiplier = 1.0f + gm.score / 3000;
+        velocity =  new Vector2(-speed * speedMultiplier,0f);
+  
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        rb2d.MovePosition(rb2d.position + velocity * Time.deltaTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.name == "squareboi")
+        {
+            gm.gameOver();
+        }
+    }
+    
+}
+```
 
 
