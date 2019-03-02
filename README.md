@@ -35,20 +35,100 @@ To UCMGDC's Intro to Unity workshop. Today we're going to demostrate the basics 
 2. Switch over to 2D view, the button is located in the `Scene window`
 3. Save the scene as `MainScene`
 
+### Prepping the Camera
+1. Select the `Main Camera` in the hierarchy
+2. Set `Projection` to ` Orthographic`
+3. Change `Size` to `3`
+4. Change  Y value of Transform Position to 1.5,
+
 ### Creating the Player
 1. Inorder to use images as sprites we have to change the assest's import settings.
 2. Select `squareboi` in the Project View
 3. In the inspector, change `Texture Type` to `Sprite (2D and UI)` and apply
 4. Drag `squareboi` from Project view into the hiearchy. This will add it to the current scene.
-5. Select `squareboi` in the heiarchy. In the inspector add component Physics2D > `Box Collider 2D`
+5. Select `squareboi` in the hierarchy. In the inspector add component Physics2D > `Box Collider 2D`
 6. Add component Physics2D > `Rigidbody 2D` to `squareboi` 
-7. Change the `Body Type` to `Kinematic`
+7. Change the `Body Type` to `Dynamic`
 8. Set Gravity Scale to `1.4`
 9. Add component Script named `squareboi`
+10. Edit the script by double clicking it
 
 ### Scripting the Player (players.cs)
 
-#### Adding gravity
+#### Referencing the RigidBody2D
+1. By default none of the components under the game object are accessible in the script. We can aquire a reference to them by using the `GetComponent<ObjectType>()` function. We want to reference the RigidBody2D in the player object so we can apply force for jumps.
+```
+...
+public class squareboi : MonoBehaviour
+{
+    Rigidbody2D rb2d;
+    ...
+     void Start()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+    }
+    ...
+```
+
+#### Adding Jumps
+2. We'll add a additional function to the player class for jumping. We'll use `AddForce()` on the rigidbody to apply upward foce  on the player.
+
+```
+   void Jump()
+   {
+      rb2d.AddForce(new Vector2(0.0f, 5.5f), ForceMode2D.Impulse);
+   }
+```
+
+3. Now in the `Update()` fuction we'll check for player input.
+```
+   void Update()
+   {
+      if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space"))
+      {
+         Jump();
+      }
+   }
+```
+
+### Creating a floor
+1. Drag `floor.png` to the hierarchy
+2. Add a BoxCollider2D and RigidBody2D components to the floor.
+3. Set the Body Type to Static.
+4. Move the Transform of the floor to under the player.
+
+#### Restricting player jumps
+Currently the player can jump whenever, where ever. We want to make sure the player can only jump on the ground.
+
+1. Add the following members to the player class.
+```
+bool grounded = false;
+```
+
+2. In the Update() check the player is grounded as well before jumping
+```
+...
+if (Input.GetKeyDown("space") && grounded)
+...
+```
+
+3. Whenever the player collides with the floor we set grounded to true
+```
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.name == "floor")
+        {
+            grounded = true;
+        }
+    }
+```
+
+4. Whenever the player jumps, set grounded to false. Add the following code to the Jump() function.
+```
+      grounded = false;
+```
+
+### Adding gravity
 ```
 using System.Collections;
 using System.Collections.Generic;
@@ -129,7 +209,7 @@ public class squareboi : MonoBehaviour
 
 }
 ```
-#### adding an obstacle
+### adding an obstacle
 
 '''
 using System.Collections;
@@ -167,7 +247,7 @@ public class spawner : MonoBehaviour
 }
 '''
 
-#### Adding a game manager 
+### Adding a game manager 
 ```
 using System.Collections;
 using System.Collections.Generic;
