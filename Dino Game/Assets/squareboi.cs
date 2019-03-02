@@ -59,20 +59,7 @@ public class squareboi : MonoBehaviour
         {
             falling = false;
         }
-        else if(col.gameObject.name == "bad")
-        {
-            //gameover
-        }
         
     }
-
-    void onTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.name == "bad")
-        {
-            Debug.Log("ow");
-        }
-    }
-
 
 }
