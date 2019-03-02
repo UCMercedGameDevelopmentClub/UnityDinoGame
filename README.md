@@ -1,6 +1,6 @@
 # UnityDinoGame
-![](https://github.com/UCMercedGameDevelopmentClub/UnityDinoGame/blob/master/Screenshots/GDC_Logo.png)
-Unity Workshop for HackMerced IV<br/>
+
+Unity Workshop for HackMerced IV
 Hosted by Game Development Club @ UC Merced
 
 ### Welcome
@@ -349,7 +349,10 @@ We'll enhance player.cs
 ```
 
 ### Final Note
-Congratulations on completing your first game in Unity! If you are interested in learning more about Unity and the game industry overall please join UC Merced's Game Development Club. <br/>
+Congratulations on completing your first game in Unity! If you are interested in learning more about Unity and the game industry overall please join UC Merced's Game Development Club.
+
+![](https://github.com/UCMercedGameDevelopmentClub/UnityDinoGame/blob/master/Screenshots/GDC_Logo.png)
+
 
 Join our social media groups for more information:
 * [Discord](https://discord.gg/v5SR9ca)
