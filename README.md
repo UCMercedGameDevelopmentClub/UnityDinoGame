@@ -8,6 +8,7 @@ To UCMGDC's Intro to Unity workshop. Today we're going to demostrate the basics 
 
 ### What You'll need
 * The latest version of [Unity](https://store.unity.com/download?ref=personal)
+* For linux users (we have not tested these install instructions): [Unity Linux Install](https://linuxhint.com/install-unity3d-linux/) 
 * Your prefered text or IDE editior to edit your code. If you don't have one installed, we recommend [VS Code](https://code.visualstudio.com/download)
 
 ### Creating a new project
