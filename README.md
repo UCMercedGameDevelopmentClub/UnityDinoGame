@@ -1,6 +1,6 @@
 # UnityDinoGame
-
-Unity Workshop for HackMerced IV
+![](https://github.com/UCMercedGameDevelopmentClub/UnityDinoGame/blob/master/Screenshots/GDC_Logo.png)
+Unity Workshop for HackMerced IV<br/>
 Hosted by Game Development Club @ UC Merced
 
 ### Welcome
@@ -35,12 +35,11 @@ To UCMGDC's Intro to Unity workshop. Today we're going to demostrate the basics 
 ### Getting Ready
 1. Delete the directional light, we will not be using it for this project
 2. Switch over to 2D view, the button is located in the `Scene window`
-3. ~~Save the scene as `MainScene`~~
 
 ### Setting the Game Window
 1. Switch over to the `Game` tab , the button is located next to `Scene` tab.
 2. To change the resolution, click the `Standalone (1024x768)` dropdown > click the `+` button
-3. Change the width to `600` and height to `200`
+3. Change the width to `600` and height to `200`, then press Ok.
 
 ### Prepping the Camera
 1. Select the `Main Camera` in the hierarchy
@@ -53,12 +52,12 @@ To UCMGDC's Intro to Unity workshop. Today we're going to demostrate the basics 
 2. Select `squareboi` in the Project View
 3. In the inspector, change `Texture Type` to `Sprite (2D and UI)` and apply
 4. Drag `squareboi` from Project view into the hiearchy. This will add it to the current scene.
-5. Select `squareboi` in the hierarchy. In the inspector add component Physics2D > `Box Collider 2D`
-6. Add component Physics2D > `Rigidbody 2D` to `squareboi` 
-7. Change the `Body Type` to `Dynamic`
-8. Set Gravity Scale to `1.4`
-9. Add component Script named `squareboi`
-10. Within **Transform**, Set the `X position` to `-8`
+5. Within **Transform**, Set the `X position` to `-8`
+6. Select `squareboi` in the hierarchy. In the inspector add component Physics2D > `Box Collider 2D`
+7. Add component Physics2D > `Rigidbody 2D` to `squareboi` 
+8. Change the `Body Type` to `Dynamic`
+9. Set Gravity Scale to `1.4`
+10. Add component Script named `squareboi`
 11. Edit the script by double clicking it within the Project tab
 
 ### Scripting the Player (players.cs)
@@ -92,7 +91,7 @@ public class squareboi : MonoBehaviour
 ```Csharp
    void Update()
    {
-      if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space"))
+      if (Input.GetKeyDown("space"))
       {
          Jump();
       }
@@ -101,9 +100,9 @@ public class squareboi : MonoBehaviour
 
 ### Creating a floor
 1. Drag `floor.png` to the hierarchy
-2. Set position to x: -8 and Y:-0.63
+2. Set position to x: `-8` and Y:`-0.63`
 3. Add a BoxCollider2D and RigidBody2D components to the floor.
-4. Set the Body Type to Static.
+4. Set the Body Type to `Static`.
 5. Move the Transform of the floor to under the player.
 
 #### Restricting player jumps
@@ -121,7 +120,12 @@ if (Input.GetKeyDown("space") && grounded)
 ...
 ```
 
-3. Whenever the player collides with the floor we set grounded to true
+3. Whenever the player jumps, set grounded to false. Add the following code to the Jump() function.
+```Csharp
+      grounded = false;
+```
+
+4. Whenever the player collides with the floor we set grounded to true
 ```Csharp
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -132,37 +136,39 @@ if (Input.GetKeyDown("space") && grounded)
     }
 ```
 
-4. Whenever the player jumps, set grounded to false. Add the following code to the Jump() function.
-```Csharp
-      grounded = false;
-```
-
 ### Creating a game manager
 We want a script to manage the game over state as well as counting player score. 
 1. In heiarchy, add a Canvas by right-clicking to `UI` > `Canvas`.
-2. Select the new Canvas in the heiarchy, create a Text called *score* by right-clicking to `UI` > `Text`.
-3. Within the inspector change the text under **Text(Script)** to `High: 0000 Score: 0000` to display both the high score and current score.
-4. Set the `Pos X` to `-148` and `Pos Y` to `86`
-5. Create a empty game object within heiarchy called `gameManager`by right clicking to `Create Empty`.
-6. Create script gameManager and attach to the gameManager object.
+2. In the inspector under **Canvas**, we change the Render Mode to `Screen Space - Camera`.
+3. Drag the Main Camera within the Heiarchy to Render Camera within the inspector.
+4. Select the new Canvas in the heiarchy, create a Text called *score* by right-clicking to `UI` > `Text`.
+5. Within the inspector change the text under **Text(Script)** to `High: 0000 Score: 0000` to display both the high score and current score.
+6. Within the scene, move the `Text` game object to the top left of the camera.
+7. Create a empty game object within heiarchy called `gameManager`by right clicking to `Create Empty`.
+8. Create script gameManager and attach to the gameManager object.
 
 #### gameManager.cs
-
-1. Declare Text scoreDisplay as a SerializeField. This is what we use to reference the score object in the scene. We also want a variable to track current score and high score.
+1. To program the game manager, we need a special library for UI:
 ```Csharp
+  using UnityEngine.UI
+```
+2. Declare Text scoreDisplay as a SerializeField. This is what we use to reference the score object in the scene. We also want a variable to track current score and high score.
+```Csharp
+  
+
     [SerializeField]
     Text scoreDisplay;
     public float high = 0.0f;
     public float score = 0.0f;
 
 ```
-2. In Update() we increment the player score
+3. In Update() we increment the player score
 ```Csharp
  score += Time.deltaTime * 100;
 scoreDisplay.text = "High: " + Mathf.RoundToInt(high).ToString() + " Score: " + Mathf.RoundToInt(score).ToString();
 ```
 
-3. We add a gameOver() function that resets the score when the player loses
+4. We add a gameOver() function that resets the score when the player loses
 ```Csharp
     public void gameOver(){
         if(high < score){
@@ -349,10 +355,7 @@ We'll enhance player.cs
 ```
 
 ### Final Note
-Congratulations on completing your first game in Unity! If you are interested in learning more about Unity and the game industry overall please join UC Merced's Game Development Club.
-
-![](https://github.com/UCMercedGameDevelopmentClub/UnityDinoGame/blob/master/Screenshots/GDC_Logo.png)
-
+Congratulations on completing your first game in Unity! If you are interested in learning more about Unity and the game industry overall please join UC Merced's Game Development Club. <br/>
 
 Join our social media groups for more information:
 * [Discord](https://discord.gg/v5SR9ca)
